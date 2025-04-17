@@ -6,12 +6,12 @@ import { userActions } from '../redux/slices/UserSlice';
 const AddUserPage: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
-    role: 'member',
+    role: 'member' as 'admin' | 'member',
   });
-  const users: Array<User> = useSelector(state => state.users)
+const users: Array<User> = useSelector((state: { users: User[] }) => state.users)
   const dispatch = useDispatch()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };

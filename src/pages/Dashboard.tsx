@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux"
+import { User } from "../types"
 
 const Dashboard = () => {
-  const users = useSelector(state => state.users)
+const users = useSelector((state: { users: User[] }) => state.users)
   return (
     <div>
         <h1>Users List</h1>
