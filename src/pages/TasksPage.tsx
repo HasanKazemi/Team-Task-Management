@@ -34,7 +34,7 @@ const TasksPage:React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         const newTask:Task = {
-            id: tasks.length + 1,
+            id: tasks.length ? tasks[tasks.length - 1].id + 1 : 1,
             title: formData.title,
             description: formData.description,
             priority: formData.priority,
