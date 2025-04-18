@@ -10,14 +10,14 @@ const projects = useSelector((state: { projects: Project[] }) => state.projects)
     <div>
         <h1>Users List</h1>
         {users.map(user=>(
-          <div style={{display:"flex",gap:"20px"}}>
+          <div key={user.id} style={{display:"flex",gap:"20px"}}>
             <h3>{user.name}</h3>
             <h4>{user.role}</h4>
           </div>
         ))}
         <div style={{marginTop: "50px"}}>
           {projects.map(project =>(
-            <div style={{display:"flex",gap:"20px"}}>
+            <div key={project.id} style={{display:"flex",gap:"20px"}}>
               <p>{project.title}</p>
               <p>{project.description}</p>
               <Link to={`/project/${project.id}`}>manage tasks</Link>
