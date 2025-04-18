@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { Project, Task, User } from '../types';
-import { addTask } from '../redux/slices/TaskSlice';
+import { addTask, deleteTask } from '../redux/slices/TaskSlice';
 
 const TasksPage:React.FC = () => {
     const params = useParams()
@@ -11,6 +11,7 @@ const TasksPage:React.FC = () => {
 
     const users:User[] = useSelector((state:{users:User[]}) => state.users)
     const tasks:Task[] = useSelector((state:{tasks:Task[]}) => state.tasks)
+    const thisTasks = tasks?.filter((task:Task) => task.assingedProjectId === Number(params.projectId))
 
     const defaultFormData : Task = {
         id: 0,
@@ -69,6 +70,18 @@ const TasksPage:React.FC = () => {
             </select>
             <button type='submit'>add task</button>
         </form>
+        <div style={{marginTop: "50px"}}>
+            {thisTasks?.map(task => (
+                <div key={task.id} style={{display: "flex",gap:"10px",marginBottom:"20px"}}>
+                    <h2>{task.title}</h2>
+                    <h3>{task.description}</h3>
+                    <p>{task.priority}</p>
+                    <p>{task.status}</p>
+                    <p>{task.deadline}</p>
+                    <button onClick={()=>dispatch(deleteTask(task.id))}>delete</button>
+                </div>
+            ))}
+        </div>
     </div>
   )
 }
