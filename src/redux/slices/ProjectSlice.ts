@@ -7,7 +7,7 @@ export const projectSlice = createSlice({
     reducers: {
         addProject(state, action:PayloadAction<Project>) {
             state.push(action.payload);
-            localStorage.setItem("projects",JSON.stringify(action.payload))
+            localStorage.setItem("projects",JSON.stringify(state))
         },
     }
 })
