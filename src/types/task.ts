@@ -4,6 +4,7 @@ export interface Task {
     description: string;
     priority: "low" | "medium" | "high";
     status: "in-progress" | "done";
-    dueDate: string;
+    deadline: string;
     assingedUserId: number;
+    assingedProjectId: number;
 }
