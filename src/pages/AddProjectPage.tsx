@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addProject } from '../redux/slices/ProjectSlice'
 import { Project } from '../types'
+import CustomInput from '../components/customInput';
+
 
 const AddProjectPage:React.FC = () => {
 
@@ -27,7 +29,7 @@ const AddProjectPage:React.FC = () => {
         <form onSubmit={handleSubmit}>
             <div>
                 <label htmlFor="title">project title</label>
-                <input type="text" name="title" id="title" value={title} onChange={(e)=>setTitle(e.target.value)} />
+                <CustomInput type="text" name="title" id="title" value={title} onChange={(e)=>setTitle(e.target.value)} />
             </div>
             <div>
                 <label htmlFor="description">description</label>

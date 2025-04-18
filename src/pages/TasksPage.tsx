@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { Project, Task, User } from '../types';
 import { addTask } from '../redux/slices/TaskSlice';
+import CustomInput from '../components/customInput';
+
 
 const TasksPage:React.FC = () => {
     const params = useParams()
@@ -50,8 +52,8 @@ const TasksPage:React.FC = () => {
     <div>
         <h1>{thisProject?.title}</h1>
         <form onSubmit={handleSubmit}>
-            <input type="text" name="title" id="title" onChange={handleChange} />
-            <input type="text" name="description" id="description"  onChange={handleChange}/>
+            <CustomInput type="text" name="title" id="title" onChange={handleChange} />
+            <CustomInput type="text" name="description" id="description"  onChange={handleChange}/>
             <select name="priority" id="priority" defaultValue="low" onChange={handleChange}>
                 <option value="low">low</option>
                 <option value="medium">medium</option>
@@ -61,7 +63,7 @@ const TasksPage:React.FC = () => {
                 <option value="in-progress">in-progress</option>
                 <option value="done">done</option>
             </select>
-            <input type="date" name="deadline" id="deadline" onChange={handleChange}/>
+            <CustomInput type="date" name="deadline" id="deadline" onChange={handleChange}/>
             <select name="assingedUserId" id="assingedUserId" defaultValue={1} onChange={handleChange}>
                 {users.map(user => (
                     <option value={user.id}>{user.name}</option>
