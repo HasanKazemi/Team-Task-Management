@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { User } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../redux/slices/UserSlice';
+import CustomInput from '../components/customInput';
 
 const AddUserPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -32,7 +33,7 @@ const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
     <div style={{ padding: '20px' }}>
       <h2>add new user</h2>
       <form onSubmit={handleSubmit}>
-        <input name="name" placeholder="name" value={formData.name} onChange={handleChange} required />
+        <CustomInput name="name" placeholder="name" value={formData.name} onChange={handleChange} required />
         <select name="role" defaultValue={"member"} value={formData.role} onChange={handleChange}>
           <option value="admin">Admin</option>
           <option value="member">Member</option>
