@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Project, Task, User } from '../types';
 import { addTask, deleteTask } from '../redux/slices/TaskSlice';
 
@@ -34,7 +34,7 @@ const TasksPage:React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         const newTask:Task = {
-            id: tasks.length ? tasks[tasks.length - 1].id + 1 : 1,
+            id: tasks.length + 1,
             title: formData.title,
             description: formData.description,
             priority: formData.priority,
@@ -78,6 +78,7 @@ const TasksPage:React.FC = () => {
                     <p>{task.priority}</p>
                     <p>{task.status}</p>
                     <p>{task.deadline}</p>
+                    <Link to={`/project/${params.projectId}/${task.id}`}>edit</Link>
                     <button onClick={()=>dispatch(deleteTask(task.id))}>delete</button>
                 </div>
             ))}

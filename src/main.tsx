@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard.tsx'
 import AddUserPage from './pages/AddUserPage.tsx'
 import AddProjectPage from './pages/AddProjectPage.tsx'
 import TasksPage from './pages/TasksPage.tsx'
+import EditTasksPage from './pages/EditTasksPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: 'project/:projectId',
         element: <TasksPage />,
+      },
+      {
+        path: 'project/:projectId/:taskId',
+        element: <EditTasksPage />,
       },
     ]
   }
