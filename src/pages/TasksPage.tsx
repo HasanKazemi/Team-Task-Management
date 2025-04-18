@@ -12,7 +12,7 @@ const TasksPage:React.FC = () => {
 
     const users:User[] = useSelector((state:{users:User[]}) => state.users)
     const tasks:Task[] = useSelector((state:{tasks:Task[]}) => state.tasks)
-    const thisTasks = tasks?.filter((task:Task) => task.assingedProjectId === Number(params.projectId))
+    const thisTasks = tasks?.filter((task:Task) => task.assignedProjectId === Number(params.projectId))
 
     const defaultFormData : Task = {
         id: 0,
@@ -21,8 +21,8 @@ const TasksPage:React.FC = () => {
         priority: "low" as "low" | "medium" | "high",
         status: "in-progress" as "in-progress" | "done",
         deadline: "",
-        assingedUserId: 1,
-        assingedProjectId: Number(params.projectId),
+        assignedUserId: 1,
+        assignedProjectId: Number(params.projectId),
     }
     const [formData, setFormData] = useState(defaultFormData)
 
@@ -42,8 +42,8 @@ const TasksPage:React.FC = () => {
             priority: formData.priority,
             status: formData.status,
             deadline: formData.deadline,
-            assingedUserId: Number(formData.assingedUserId),
-            assingedProjectId: Number(params.projectId),
+            assignedUserId: Number(formData.assignedUserId),
+            assignedProjectId: Number(params.projectId),
         }
         if (isEditMode) {
             dispatch(updateTask({...newTask, id:formData.id}))
@@ -79,7 +79,7 @@ const TasksPage:React.FC = () => {
                 <option value="done">done</option>
             </select>
             <input type="date" name="deadline" id="deadline" value={formData.deadline} onChange={handleChange}/>
-            <select name="assingedUserId" id="assingedUserId" value={formData.assingedUserId} onChange={handleChange}>
+            <select name="assignedUserId" id="assignedUserId" value={formData.assignedUserId} onChange={handleChange}>
                 {users.map(user => (
                     <option key={user.id} value={user.id}>{user.name}</option>
                 ))}
