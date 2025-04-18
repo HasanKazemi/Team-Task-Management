@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Dashboard from './pages/Dashboard.tsx'
 import AddUserPage from './pages/AddUserPage.tsx'
 import AddProjectPage from './pages/AddProjectPage.tsx'
+import TasksPage from './pages/TasksPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: 'add-project',
         element: <AddProjectPage />,
+      },
+      {
+        path: 'project/:projectId',
+        element: <TasksPage />,
       },
     ]
   }
