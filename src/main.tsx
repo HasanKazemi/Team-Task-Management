@@ -7,6 +7,7 @@ import { store } from './redux/store.ts'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Dashboard from './pages/Dashboard.tsx'
 import AddUserPage from './pages/AddUserPage.tsx'
+import AddProjectPage from './pages/AddProjectPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: 'add-user',
         element: <AddUserPage />,
+      },
+      {
+        path: 'add-project',
+        element: <AddProjectPage />,
       },
     ]
   }
