@@ -51,19 +51,19 @@ const TasksPage:React.FC = () => {
     <div>
         <h1>{thisProject?.title}</h1>
         <form onSubmit={handleSubmit}>
-            <input type="text" name="title" id="title" onChange={handleChange} />
-            <input type="text" name="description" id="description"  onChange={handleChange}/>
-            <select name="priority" id="priority" defaultValue="low" onChange={handleChange}>
+            <input type="text" name="title" id="title" value={formData.title} onChange={handleChange} />
+            <input type="text" name="description" id="description" value={formData.description} onChange={handleChange}/>
+            <select name="priority" id="priority" value={formData.priority} onChange={handleChange}>
                 <option value="low">low</option>
                 <option value="medium">medium</option>
                 <option value="high">high</option>
             </select>
-            <select name="status" id="status" defaultValue="in-progress" onChange={handleChange}>
+            <select name="status" id="status" value={formData.status} onChange={handleChange}>
                 <option value="in-progress">in-progress</option>
                 <option value="done">done</option>
             </select>
-            <input type="date" name="deadline" id="deadline" onChange={handleChange}/>
-            <select name="assingedUserId" id="assingedUserId" defaultValue={1} onChange={handleChange}>
+            <input type="date" name="deadline" id="deadline" value={formData.deadline} onChange={handleChange}/>
+            <select name="assingedUserId" id="assingedUserId" value={formData.assingedUserId} onChange={handleChange}>
                 {users.map(user => (
                     <option value={user.id}>{user.name}</option>
                 ))}
