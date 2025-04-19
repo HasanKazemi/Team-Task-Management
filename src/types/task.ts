@@ -5,6 +5,6 @@ export interface Task {
     priority: "low" | "medium" | "high";
     status: "in-progress" | "done";
     deadline: string;
-    assingedUserId: number;
-    assingedProjectId: number;
+    assignedUserId: number;
+    assignedProjectId: number;
 }
