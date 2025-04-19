@@ -1,10 +1,13 @@
 import { useSelector } from "react-redux"
-import { Project, User } from "../types"
+import { Project, Task, User } from "../types"
 import { Link } from "react-router-dom"
 
 const Dashboard = () => {
-const users = useSelector((state: { users: User[] }) => state.users)
-const projects = useSelector((state: { projects: Project[] }) => state.projects)
+
+  const users = useSelector((state: { users: User[] }) => state.users)
+  const projects = useSelector((state: { projects: Project[] }) => state.projects)
+
+  const filteredTasks = useSelector((state: { tasks: Task[] }) => state.tasks)
 
   return (
     <div>
@@ -21,6 +24,20 @@ const projects = useSelector((state: { projects: Project[] }) => state.projects)
               <p>{project.title}</p>
               <p>{project.description}</p>
               <Link to={`/project/${project.id}`}>manage tasks</Link>
+            </div>
+          ))}
+        </div>
+        <div style={{marginTop:"100px"}}>
+          <h2>Filter Tasks</h2>
+          {filteredTasks?.map(task => (
+            <div key={task.id} style={{display:"flex", gap:"20px"}}>
+              <p>{task.title}</p>
+              <p>{task.description}</p>
+              <p>{task.status}</p>
+              <p>{task.priority}</p>
+              <p>{task.deadline}</p>
+              <p>{projects.find(project=>project.id===task.assignedProjectId)?.title}</p>
+              <p>{users.find(user=>user.id ===task.assignedUserId)?.name}</p>
             </div>
           ))}
         </div>
