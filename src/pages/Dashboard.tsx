@@ -1,14 +1,25 @@
 import { useSelector } from "react-redux"
 import { Project, Task, User } from "../types"
 import { Link } from "react-router-dom"
+import { selectFilteredTasks } from "../redux/selectors/selectFilteredTasks"
+import { useState } from "react"
 
 const Dashboard = () => {
 
   const users = useSelector((state: { users: User[] }) => state.users)
   const projects = useSelector((state: { projects: Project[] }) => state.projects)
 
-  const filteredTasks = useSelector((state: { tasks: Task[] }) => state.tasks)
+  const [filters, setFilters] = useState({
+    searchTerm: ""
+  })
+  const filteredTasks = useSelector((state: { tasks: Task[] }) => selectFilteredTasks(state,filters))
 
+  const handleChange = (event:React.ChangeEvent<HTMLInputElement>)=>{
+    console.log(event.target);
+    const {name,value} = event.target
+    setFilters(prev => ({ ...prev, [name]: value }));
+    // setFilters(prev => {...prev, searchTerm: event.target.value})
+  }
   return (
     <div>
         <h1>Users List</h1>
@@ -29,6 +40,7 @@ const Dashboard = () => {
         </div>
         <div style={{marginTop:"100px"}}>
           <h2>Filter Tasks</h2>
+          <input type="text" name="searchTerm" id="searchTerm" value={filters.searchTerm} onChange={handleChange} />
           {filteredTasks?.map(task => (
             <div key={task.id} style={{display:"flex", gap:"20px"}}>
               <p>{task.title}</p>
