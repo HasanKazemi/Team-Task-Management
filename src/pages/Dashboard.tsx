@@ -46,18 +46,22 @@ const Dashboard: React.FC = () => {
         </div>
         <div style={{marginTop:"100px"}}>
           <h2>Filter Tasks</h2>
+          <label htmlFor="searchTerm">search by title</label>
           <input type="text" name="searchTerm" id="searchTerm" value={filters.searchTerm} onChange={handleChange} />
+          <label htmlFor="searchStatus">filter by task's status</label>
           <select name="searchStatus" id="searchStatus" value={filters.searchStatus} onChange={handleChange}>
             <option value="all">all</option>
             <option value="in-progress">in-progress</option>
             <option value="done">done</option>
           </select>
+          <label htmlFor="searchPriority">filter by task's priority</label>
           <select name="searchPriority" id="searchPriority" value={filters.searchPriority} onChange={handleChange}>
             <option value="all">--</option>
             <option value="low">low</option>
             <option value="medium">medium</option>
             <option value="high">high</option>
           </select>
+          <label htmlFor="searchAssignedUserId">responsible person</label>
           <select name="searchAssignedUserId" id="searchAssignedUserId" value={filters.searchAssignedUserId} onChange={handleChange}>
             <option value="">--</option>
             {users.map(user => (
