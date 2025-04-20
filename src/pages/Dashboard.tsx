@@ -13,13 +13,17 @@ const Dashboard: React.FC = () => {
     searchTerm: "",
     searchStatus: "",
     searchPriority: "",
+    searchAssignedUserId: 0,
   })
 
   const filteredTasks = useSelector((state: { tasks: Task[] }) => selectFilteredTasks(state,filters))
 
   const handleChange = (event:React.ChangeEvent<HTMLInputElement | HTMLSelectElement>)=>{
     const {name,value} = event.target
-    setFilters(prev => ({ ...prev, [name]: value }));    
+    if (name == "searchAssignedUserId") {
+      return setFilters(prev => ({ ...prev, [name]: Number(value) }));
+    }
+    setFilters(prev => ({ ...prev, [name]: value }));  
   }
 
   return (
@@ -53,6 +57,12 @@ const Dashboard: React.FC = () => {
             <option value="low">low</option>
             <option value="medium">medium</option>
             <option value="high">high</option>
+          </select>
+          <select name="searchAssignedUserId" id="searchAssignedUserId" value={filters.searchAssignedUserId} onChange={handleChange}>
+            <option value="">--</option>
+            {users.map(user => (
+              <option key={user.id} value={user.id}>{user.name}</option>
+            ))}
           </select>
           {filteredTasks?.map(task => (
             <div key={task.id} style={{display:"flex", gap:"20px"}}>

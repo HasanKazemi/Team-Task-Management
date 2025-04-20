@@ -11,12 +11,15 @@ export const selectFilteredTasks = createSelector(
     [selectTasks,
         (_: RootState, filters: Filters) => filters
     ],
-    (allTasks: Task[], {searchTerm, searchStatus, searchPriority}: Filters) => {
+    (allTasks: Task[], {searchTerm, searchStatus, searchPriority, searchAssignedUserId}: Filters) => {
         return allTasks.filter(task => {
             const matchesTitle = !searchTerm || task.title.toLowerCase().includes(searchTerm.toLowerCase())
             const matchesStatus = !searchStatus || task.status === searchStatus
             const matchesPriority = !searchPriority || task.priority === searchPriority
-            return matchesTitle && matchesStatus && matchesPriority
+            const matchesAssignedUser = searchAssignedUserId == 0 || task.assignedUserId == searchAssignedUserId
+            console.log(searchAssignedUserId);
+            
+            return matchesTitle && matchesStatus && matchesPriority && matchesAssignedUser
         })
     }
 )
