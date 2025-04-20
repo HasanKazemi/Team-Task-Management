@@ -1,13 +1,8 @@
 import { createSelector } from "@reduxjs/toolkit"
-import { Task } from "../../types"
+import { Filters, Task } from "../../types"
 
 interface RootState {
     tasks: Task[];
-}
-
-interface Filters {
-    searchTerm: string;
-    searchStatus: "in-progress" | "done";
 }
 
 const selectTasks = (state: RootState) => state.tasks;
@@ -16,11 +11,12 @@ export const selectFilteredTasks = createSelector(
     [selectTasks,
         (_: RootState, filters: Filters) => filters
     ],
-    (allTasks: Task[], {searchTerm, searchStatus}: Filters) => {
+    (allTasks: Task[], {searchTerm, searchStatus, searchPriority}: Filters) => {
         return allTasks.filter(task => {
             const matchesTitle = !searchTerm || task.title.toLowerCase().includes(searchTerm.toLowerCase())
             const matchesStatus = !searchStatus || task.status === searchStatus
-            return matchesTitle && matchesStatus
+            const matchesPriority = !searchPriority || task.priority === searchPriority
+            return matchesTitle && matchesStatus && matchesPriority
         })
     }
 )

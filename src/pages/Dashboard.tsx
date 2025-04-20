@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useSelector } from "react-redux"
-import { Project, Task, User } from "../types"
+import { Filters, Project, Task, User } from "../types"
 import { Link } from "react-router-dom"
 import { selectFilteredTasks } from "../redux/selectors/selectFilteredTasks"
 
@@ -9,22 +9,17 @@ const Dashboard: React.FC = () => {
   const users = useSelector((state: { users: User[] }) => state.users)
   const projects = useSelector((state: { projects: Project[] }) => state.projects)
 
-  interface filterState {
-    searchTerm: string;
-    searchStatus: "in-progress" | "done";
-  }
-  const [filters, setFilters] = useState<filterState>({
+  const [filters, setFilters] = useState<Filters>({
     searchTerm: "",
     searchStatus: "",
+    searchPriority: "",
   })
 
   const filteredTasks = useSelector((state: { tasks: Task[] }) => selectFilteredTasks(state,filters))
 
   const handleChange = (event:React.ChangeEvent<HTMLInputElement | HTMLSelectElement>)=>{
     const {name,value} = event.target
-    setFilters(prev => ({ ...prev, [name]: value }));
-    console.log(event.target);
-    
+    setFilters(prev => ({ ...prev, [name]: value }));    
   }
 
   return (
@@ -52,6 +47,12 @@ const Dashboard: React.FC = () => {
             <option value="">all</option>
             <option value="in-progress">in-progress</option>
             <option value="done">done</option>
+          </select>
+          <select name="searchPriority" id="searchPriority" value={filters.searchPriority} onChange={handleChange}>
+            <option value="">--</option>
+            <option value="low">low</option>
+            <option value="medium">medium</option>
+            <option value="high">high</option>
           </select>
           {filteredTasks?.map(task => (
             <div key={task.id} style={{display:"flex", gap:"20px"}}>
