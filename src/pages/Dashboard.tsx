@@ -1,25 +1,32 @@
+import React, { useState } from "react"
 import { useSelector } from "react-redux"
 import { Project, Task, User } from "../types"
 import { Link } from "react-router-dom"
 import { selectFilteredTasks } from "../redux/selectors/selectFilteredTasks"
-import { useState } from "react"
 
-const Dashboard = () => {
+const Dashboard: React.FC = () => {
 
   const users = useSelector((state: { users: User[] }) => state.users)
   const projects = useSelector((state: { projects: Project[] }) => state.projects)
 
-  const [filters, setFilters] = useState({
-    searchTerm: ""
+  interface filterState {
+    searchTerm: string;
+    searchStatus: "in-progress" | "done";
+  }
+  const [filters, setFilters] = useState<filterState>({
+    searchTerm: "",
+    searchStatus: "",
   })
+
   const filteredTasks = useSelector((state: { tasks: Task[] }) => selectFilteredTasks(state,filters))
 
-  const handleChange = (event:React.ChangeEvent<HTMLInputElement>)=>{
-    console.log(event.target);
+  const handleChange = (event:React.ChangeEvent<HTMLInputElement | HTMLSelectElement>)=>{
     const {name,value} = event.target
     setFilters(prev => ({ ...prev, [name]: value }));
-    // setFilters(prev => {...prev, searchTerm: event.target.value})
+    console.log(event.target);
+    
   }
+
   return (
     <div>
         <h1>Users List</h1>
@@ -41,6 +48,11 @@ const Dashboard = () => {
         <div style={{marginTop:"100px"}}>
           <h2>Filter Tasks</h2>
           <input type="text" name="searchTerm" id="searchTerm" value={filters.searchTerm} onChange={handleChange} />
+          <select name="searchStatus" id="searchStatus" value={filters.searchStatus} onChange={handleChange}>
+            <option value="">all</option>
+            <option value="in-progress">in-progress</option>
+            <option value="done">done</option>
+          </select>
           {filteredTasks?.map(task => (
             <div key={task.id} style={{display:"flex", gap:"20px"}}>
               <p>{task.title}</p>
