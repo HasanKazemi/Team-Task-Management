@@ -11,8 +11,8 @@ const Dashboard: React.FC = () => {
 
   const [filters, setFilters] = useState<Filters>({
     searchTerm: "",
-    searchStatus: "",
-    searchPriority: "",
+    searchStatus: "all",
+    searchPriority: "all",
     searchAssignedUserId: 0,
   })
 
@@ -48,12 +48,12 @@ const Dashboard: React.FC = () => {
           <h2>Filter Tasks</h2>
           <input type="text" name="searchTerm" id="searchTerm" value={filters.searchTerm} onChange={handleChange} />
           <select name="searchStatus" id="searchStatus" value={filters.searchStatus} onChange={handleChange}>
-            <option value="">all</option>
+            <option value="all">all</option>
             <option value="in-progress">in-progress</option>
             <option value="done">done</option>
           </select>
           <select name="searchPriority" id="searchPriority" value={filters.searchPriority} onChange={handleChange}>
-            <option value="">--</option>
+            <option value="all">--</option>
             <option value="low">low</option>
             <option value="medium">medium</option>
             <option value="high">high</option>
