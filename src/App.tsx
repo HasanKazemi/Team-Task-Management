@@ -1,13 +1,19 @@
-import { Outlet } from 'react-router-dom'
-import './App.css'
+import React, { useState } from 'react';
+import LoginForm from './pages/loginForm';
+import TasksPage from './pages/TasksPage';
 
-function App() {
+const App: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
     <>
-      <Outlet/>
+      {isAuthenticated ? (
+        <TasksPage />
+      ) : (
+        <LoginForm onLogin={() => setIsAuthenticated(true)} />
+      )}
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
