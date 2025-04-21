@@ -1,37 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { User } from '../types';
+import { useDispatch, useSelector } from 'react-redux';
+import { userActions } from '../redux/slices/UserSlice';
+import CustomInput from '../components/customInput';
 
-interface CustomSelectProps {
-  name: string;
-  value: string;
-  options: { value: string; label: string }[];
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  required?: boolean;
-}
+const AddUserPage: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    role: 'member' as 'admin' | 'member',
+  });
+const users: Array<User> = useSelector((state: { users: User[] }) => state.users)
+  const dispatch = useDispatch()
 
-const CustomSelect: React.FC<CustomSelectProps> = ({ name, value, options, onChange, required }) => {
+const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>)=>{
+    event.preventDefault();
+    const newUser : User = {
+      id: users.length + 1,
+      name: formData.name,
+      role: formData.role,
+    }
+    dispatch(userActions.addUser(newUser))
+    alert('user added successfully!');
+    setFormData({ name: '', role: 'member'});
+  }
+
   return (
-    <div>
-      <select
-        name={name}
-        value={value}
-        onChange={onChange}
-        required={required}
-        style={{
-          width: '100%',
-          padding: '10px',
-          border: '1px solid #c8e6c9',
-          borderRadius: '5px',
-          fontSize: '14px',
-        }}
-      >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+    <div style={{ padding: '20px' }}>
+      <h2>add new user</h2>
+      <form onSubmit={handleSubmit}>
+        <CustomInput name="name" placeholder="name" value={formData.name} onChange={handleChange} required />
+        <select name="role" defaultValue={"member"} value={formData.role} onChange={handleChange}>
+          <option value="admin">Admin</option>
+          <option value="member">Member</option>
+        </select>
+        <button type="submit">add</button>
+      </form>
     </div>
   );
-};
+}
 
-export default CustomSelect;
+export default AddUserPage
