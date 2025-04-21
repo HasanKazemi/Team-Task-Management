@@ -9,6 +9,7 @@ interface CustomSelectProps {
   defaultValue?: string | number;
   disabled?: boolean;
   style?: React.CSSProperties;
+  children?: React.ReactNode;
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
