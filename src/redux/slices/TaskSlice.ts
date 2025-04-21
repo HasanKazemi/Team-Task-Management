@@ -8,7 +8,19 @@ export const taskSlice = createSlice({
         addTask: (state, action:PayloadAction<Task>) => {
             state.push(action.payload)
             localStorage.setItem("tasks", JSON.stringify(state))
+        },
+        updateTask: (state, action:PayloadAction<Task>) => {
+            const index = state.findIndex((task:Task) => task.id === action.payload.id)
+            if (index !== -1) {
+                state[index] = action.payload
+                localStorage.setItem("tasks", JSON.stringify(state))
+            }
+        },
+        deleteTask: (state, action:PayloadAction<number>) => {
+            const filteredTasks = state.filter((task:Task) => task.id !== action.payload)
+            localStorage.setItem("tasks", JSON.stringify(filteredTasks))
+            return filteredTasks
         }
     }
 })
-export const { addTask } = taskSlice.actions;
+export const { addTask, updateTask, deleteTask } = taskSlice.actions;

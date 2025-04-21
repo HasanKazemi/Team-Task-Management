@@ -2,29 +2,30 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Project, Task, User } from '../types';
-import { addTask } from '../redux/slices/TaskSlice';
-import CustomInput from '../components/customInput';
-import CustomSelect from '../components/customSelect';
 
-const TasksPage: React.FC = () => {
-  const params = useParams();
-  const projects: Project[] = useSelector((state: { projects: Project[] }) => state.projects);
-  const thisProject = projects.find((project) => project.id === Number(params.projectId));
+import { addTask, deleteTask, updateTask } from '../redux/slices/TaskSlice';
 
-  const users: User[] = useSelector((state: { users: User[] }) => state.users);
-  const tasks: Task[] = useSelector((state: { tasks: Task[] }) => state.tasks);
+const TasksPage : React.FC = () => {
+    const [isEditMode, setIsEditMode] = useState(false)
+    const params = useParams()
+    const projects:Project[] = useSelector((state:{projects:Project[]}) => state.projects)
+    const thisProject = projects.find((project)=> project.id === (Number(params.projectId)))
 
-  const defaultFormData: Task = {
-    id: 0,
-    title: '',
-    description: '',
-    priority: 'low' as 'low' | 'medium' | 'high',
-    status: 'in-progress' as 'in-progress' | 'done',
-    deadline: '',
-    assingedUserId: 1,
-    assingedProjectId: Number(params.projectId),
-  };
-  const [formData, setFormData] = useState(defaultFormData);
+    const users:User[] = useSelector((state:{users:User[]}) => state.users)
+    const tasks:Task[] = useSelector((state:{tasks:Task[]}) => state.tasks)
+    const thisTasks = tasks?.filter((task:Task) => task.assignedProjectId === Number(params.projectId));
+
+    const defaultFormData : Task = {
+        id: 0,
+        title: "",
+        description: "",
+        priority: "low" as "low" | "medium" | "high",
+        status: "in-progress" as "in-progress" | "done",
+        deadline: "",
+        assignedUserId: 1,
+        assignedProjectId: Number(params.projectId),
+    };
+    const [formData, setFormData] = useState(defaultFormData)
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -41,52 +42,66 @@ const TasksPage: React.FC = () => {
       priority: formData.priority,
       status: formData.status,
       deadline: formData.deadline,
-      assingedUserId: Number(formData.assingedUserId),
-      assingedProjectId: Number(params.projectId),
+      assignedUserId: Number(formData.assignedUserId),
+      assignedProjectId: Number(params.projectId),
     };
-    dispatch(addTask(newTask));
-    setFormData(defaultFormData);
-  };
+
+        if (isEditMode) {
+            dispatch(updateTask({...newTask, id:formData.id}))
+        } else {
+            dispatch(addTask(newTask))
+            setFormData(defaultFormData)
+        }
+    }
+
+    const handleEdit = (taskId:number) => {
+        setIsEditMode(true)
+        const task: Task | undefined = tasks.find((task: Task) => task.id === taskId)
+        task && setFormData(task)
+    };
 
   return (
     <div>
-      <h1>{thisProject?.title}</h1>
-      <form onSubmit={handleSubmit}>
-        <CustomInput type="text" name="title" id="title" onChange={handleChange} />
-        <CustomInput type="text" name="description" id="description" onChange={handleChange} />
-        <CustomSelect
-          name="priority"
-          value={formData.priority}
-          onChange={handleChange}
-          options={[
-            { value: 'low', label: 'Low' },
-            { value: 'medium', label: 'Medium' },
-            { value: 'high', label: 'High' },
-          ]}
-        />
-        <CustomSelect
-          name="status"
-          value={formData.status}
-          onChange={handleChange}
-          options={[
-            { value: 'in-progress', label: 'In Progress' },
-            { value: 'done', label: 'Done' },
-          ]}
-        />
-        <CustomInput type="date" name="deadline" id="deadline" onChange={handleChange} />
-        <CustomSelect
-          name="assingedUserId"
-          value={formData.assingedUserId}
-          onChange={handleChange}
-          options={users.map((user) => ({
-            value: user.id.toString(),
-            label: user.name,
-          }))}
-        />
-        <button type="submit">Add Task</button>
-      </form>
+        <h1>{thisProject?.title}</h1>
+        <div style={{display: "flex"}}>
+            <h2>{isEditMode ? "Edit Mode" : "Add Mode"}</h2>
+            {isEditMode && <button onClick={() => {setIsEditMode(false);setFormData(defaultFormData)}}>Back to Add Mode</button>}
+        </div>
+        <form onSubmit={handleSubmit}>
+            <input type="text" name="title" id="title" value={formData.title} onChange={handleChange} />
+            <input type="text" name="description" id="description" value={formData.description} onChange={handleChange}/>
+            <select name="priority" id="priority" value={formData.priority} onChange={handleChange}>
+                <option value="low">low</option>
+                <option value="medium">medium</option>
+                <option value="high">high</option>
+            </select>
+            <select name="status" id="status" value={formData.status} onChange={handleChange}>
+                <option value="in-progress">in-progress</option>
+                <option value="done">done</option>
+            </select>
+            <input type="date" name="deadline" id="deadline" value={formData.deadline} onChange={handleChange}/>
+            <select name="assignedUserId" id="assignedUserId" value={formData.assignedUserId} onChange={handleChange}>
+                {users.map(user => (
+                    <option key={user.id} value={user.id}>{user.name}</option>
+                ))}
+            </select>
+            <button type='submit'>{isEditMode ? "update task" : "add task"}</button>
+        </form>
+        {isEditMode || (
+            <div style={{marginTop: "50px"}}>
+                {thisTasks?.map(task => (
+                    <div key={task.id} style={{display: "flex",gap:"10px",marginBottom:"20px"}}>
+                        <h2>{task.title}</h2>
+                        <h3>{task.description}</h3>
+                        <p>{task.priority}</p>
+                        <p>{task.status}</p>
+                        <p>{task.deadline}</p>
+                        <button onClick={()=>handleEdit(task.id)}>edit</button>
+                        <button onClick={()=>dispatch(deleteTask(task.id))}>delete</button>
+                    </div>
+                ))}
+            </div>
+        )}
     </div>
-  );
-};
-
+  )};
 export default TasksPage;
