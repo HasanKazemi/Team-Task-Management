@@ -7,6 +7,11 @@ import CustomInput from '../components/customInput';
 
 const AddProjectPage:React.FC = () => {
 
+    const role = localStorage.getItem('role');
+if (role !== 'admin') {
+    return <p> Acces denied </p>;
+}
+
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const dispatch = useDispatch()

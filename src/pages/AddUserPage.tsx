@@ -7,6 +7,12 @@ import CustomSelect from '../components/customSelect';
 
 
 const AddUserPage: React.FC = () => {
+
+  const role = localStorage.getItem('role');
+  if (role !== 'admin') {
+      return <p> Acces denied </p>;
+  }
+  
   const [formData, setFormData] = useState({
     name: '',
     role: 'member' as 'admin' | 'member',

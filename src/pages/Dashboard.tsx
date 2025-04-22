@@ -6,6 +6,11 @@ import { selectFilteredTasks } from "../redux/selectors/selectFilteredTasks"
 
 const Dashboard: React.FC = () => {
 
+  const role = localStorage.getItem('role');
+  if (role !== 'admin') {
+      return <p> Acces denied </p>;
+  }
+  
   const users = useSelector((state: { users: User[] }) => state.users)
   const projects = useSelector((state: { projects: Project[] }) => state.projects)
 

@@ -68,8 +68,8 @@ const TasksPage : React.FC = () => {
             {isEditMode && <button onClick={() => {setIsEditMode(false);setFormData(defaultFormData)}}>Back to Add Mode</button>}
         </div>
         <form onSubmit={handleSubmit}>
-            <input type="text" name="title" id="title" value={formData.title} onChange={handleChange} />
-            <input type="text" name="description" id="description" value={formData.description} onChange={handleChange}/>
+            <input type="text" name="title" id="title" value={formData.title} onChange={handleChange} placeholder='title' />
+            <input type="text" name="description" id="description" value={formData.description} onChange={handleChange} placeholder=''/>
             <select name="priority" id="priority" value={formData.priority} onChange={handleChange}>
                 <option value="low">low</option>
                 <option value="medium">medium</option>
