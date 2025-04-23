@@ -6,12 +6,14 @@ import { userActions } from '../redux/slices/UserSlice';
 const AddUserPage: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
+    password: '',
     role: 'member' as 'admin' | 'member',
   });
-const users: Array<User> = useSelector((state: { users: User[] }) => state.users)
+
+  const users: Array<User> = useSelector((state: { users: User[] }) => state.users)
   const dispatch = useDispatch()
 
-const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -21,11 +23,12 @@ const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
     const newUser : User = {
       id: users.length + 1,
       name: formData.name,
+      password: formData.password,
       role: formData.role,
     }
     dispatch(userActions.addUser(newUser))
     alert('user added successfully!');
-    setFormData({ name: '', role: 'member'});
+    setFormData({ name: '', password: '', role: 'member'});
   }
 
   return (
@@ -33,7 +36,8 @@ const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
       <h2>add new user</h2>
       <form onSubmit={handleSubmit}>
         <input name="name" placeholder="name" value={formData.name} onChange={handleChange} required />
-        <select name="role" defaultValue={"member"} value={formData.role} onChange={handleChange}>
+        <input name="password" placeholder="password" value={formData.password} onChange={handleChange} required />
+        <select name="role" value={formData.role} onChange={handleChange}>
           <option value="admin">Admin</option>
           <option value="member">Member</option>
         </select>
