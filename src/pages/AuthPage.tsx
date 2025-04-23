@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { userActions } from '../redux/slices/UserSlice';
+import { User } from '../types';
 
 const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true)
@@ -6,6 +9,9 @@ const AuthPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch()
+  const users: Array<User> = useSelector((state: { users: User[] }) => state.users)
 
   const validateForm = () => {
     if (!username || !password) {
@@ -23,12 +29,23 @@ const AuthPage: React.FC = () => {
     return true;
   };
 
+  const signup = () => {
+    const newUser : User = {
+        id: users.length + 1,
+        name: username,
+        password: password,
+        role: "member",
+    }
+    dispatch(userActions.addUser(newUser))
+  }
+
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
-
     setLoading(true);
     setError('');
+
+    !isLogin && signup();
 
     setTimeout(() => {
       setLoading(false);
