@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../redux/slices/UserSlice';
 import { User } from '../types';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../redux/slices/AuthSlice';
 
 const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true)
@@ -9,6 +11,7 @@ const AuthPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
 
   const dispatch = useDispatch()
   const users: Array<User> = useSelector((state: { users: User[] }) => state.users)
@@ -29,7 +32,7 @@ const AuthPage: React.FC = () => {
     return true;
   };
 
-  const signup = () => {
+  const handleSignup = () => {
     const newUser : User = {
         id: users.length + 1,
         name: username,
@@ -37,6 +40,16 @@ const AuthPage: React.FC = () => {
         role: "member",
     }
     dispatch(userActions.addUser(newUser))
+    dispatch(login(newUser))
+  }
+
+  const handleLogin = () => {
+    const detectedUser = users?.find(user => user.name === username && user.password === password)
+    if (!detectedUser) {
+      return setError("user not found")
+    }
+    dispatch(login(detectedUser))
+    navigate("/")
   }
 
   const handleRegister = (e: React.FormEvent) => {
@@ -45,7 +58,7 @@ const AuthPage: React.FC = () => {
     setLoading(true);
     setError('');
 
-    !isLogin && signup();
+    isLogin ? handleLogin() : handleSignup();
 
     setTimeout(() => {
       setLoading(false);
