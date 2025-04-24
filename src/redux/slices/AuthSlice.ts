@@ -19,12 +19,19 @@ export const authSlice = createSlice({
         login(state,action:PayloadAction<string>){
             const token = action.payload
             const decoded = decodeToken(token)
+            console.log(decoded);
+            
             if (decoded) {
                 state.token = token
                 state.user = decoded
                 sessionStorage.setItem("token",token)
             }
+        },
+        logout(state){
+            state.token = null
+            state.user = null
+            sessionStorage.removeItem("token")
         }
     }
 })
-export const {login} = authSlice.actions
+export const { login,logout } = authSlice.actions
