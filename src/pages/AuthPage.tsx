@@ -4,6 +4,7 @@ import { userActions } from '../redux/slices/UserSlice';
 import { User } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../redux/slices/AuthSlice';
+import { generateToken } from '../jwt/mockToken';
 
 const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true)
@@ -40,7 +41,8 @@ const AuthPage: React.FC = () => {
         role: "member",
     }
     dispatch(userActions.addUser(newUser))
-    dispatch(login(newUser))
+    const token = generateToken(newUser)
+    dispatch(login(token))
   }
 
   const handleLogin = () => {
@@ -48,7 +50,8 @@ const AuthPage: React.FC = () => {
     if (!detectedUser) {
       return setError("user not found")
     }
-    dispatch(login(detectedUser))
+    const token = generateToken(detectedUser)
+    dispatch(login(token))
     navigate("/")
   }
 

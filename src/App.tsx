@@ -3,18 +3,24 @@ import './App.css'
 import Menu from './components/Menu'
 import AuthPage from './pages/AuthPage'
 import { useSelector } from 'react-redux'
-import { Auth } from './redux/slices/AuthSlice'
-
+import { AuthState } from './redux/slices/AuthSlice'
+import { useEffect } from 'react'
 
 function App() {
-  const isAuthenticated = useSelector((state:{auth:Auth}) =>state.auth.isAuthenticated)
+  const {token,user} = useSelector((state:{auth: AuthState}) => state.auth)
+  useEffect(()=>{
+    
+  },[token])
   return (
     <>
-      <Menu/>
-      {!isAuthenticated ? (<AuthPage />)
-      :
-      (<Outlet/>)
-      }
+      {token ? (
+        <>
+          <Menu />
+          <Outlet />
+        </>
+      ):(
+        <AuthPage />
+      )}
     </>
   )
 }
