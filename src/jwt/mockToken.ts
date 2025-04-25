@@ -6,7 +6,7 @@ export const generateToken = (userData: User): string => {
     return token
 };
 
-export const decodeToken = (token: string): User => {
-    const decoded = JSON.parse(atob(token))
+export const decodeToken = (token: string): string => {
+    const decoded = JSON.parse(atob(token))    
     return decoded
 }

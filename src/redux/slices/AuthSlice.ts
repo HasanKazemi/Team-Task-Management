@@ -1,15 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { decodeToken } from "../../jwt/mockToken";
-import { User } from "../../types";
 
 export interface AuthState {
     token: string | null;
-    user: User | null;
+    user: string | null;
 }
 
 const initialState : AuthState = {
     token: sessionStorage.getItem("token") || null,
-    user: null,
+    user: sessionStorage.getItem('token') ? decodeToken(sessionStorage.getItem('token')!) || null : null,
 }
 
 export const authSlice = createSlice({
@@ -19,7 +18,7 @@ export const authSlice = createSlice({
         login(state,action:PayloadAction<string>){
             const token = action.payload
             const decoded = decodeToken(token)
-            console.log(decoded);
+            console.log(typeof decoded);
             
             if (decoded) {
                 state.token = token

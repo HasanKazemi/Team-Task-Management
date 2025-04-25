@@ -7,6 +7,7 @@ import { AuthState } from './redux/slices/AuthSlice'
 
 function App() {
   const {token,user} = useSelector((state:{auth: AuthState}) => state.auth)
+  
   return (
     <>
       {token ? (
