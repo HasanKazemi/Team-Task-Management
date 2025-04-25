@@ -36,6 +36,7 @@ const Dashboard: React.FC = () => {
           </div>
         ))}
         <div style={{marginTop: "50px"}}>
+          <h2>Project List</h2>
           {projects.map(project =>(
             <div key={project.id} style={{display:"flex",gap:"20px"}}>
               <p>{project.title}</p>
@@ -45,9 +46,9 @@ const Dashboard: React.FC = () => {
           ))}
         </div>
         <div style={{marginTop:"100px"}}>
-          <h2>Filter Tasks</h2>
+          <h4>Advance Filter</h4>
           <label htmlFor="searchTerm">search by title</label>
-          <input type="text" name="searchTerm" id="searchTerm" value={filters.searchTerm} onChange={handleChange} />
+          <input type="text" name="searchTerm" id="searchTerm" placeholder="task title..." value={filters.searchTerm} onChange={handleChange} />
           <label htmlFor="searchStatus">filter by task's status</label>
           <select name="searchStatus" id="searchStatus" value={filters.searchStatus} onChange={handleChange}>
             <option value="all">all</option>
@@ -68,6 +69,7 @@ const Dashboard: React.FC = () => {
               <option key={user.id} value={user.id}>{user.name}</option>
             ))}
           </select>
+          <h2>Tasks List</h2>
           {filteredTasks?.map(task => (
             <div key={task.id} style={{display:"flex", gap:"20px"}}>
               <p>{task.title}</p>
