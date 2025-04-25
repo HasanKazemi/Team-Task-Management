@@ -20,7 +20,12 @@ export const taskSlice = createSlice({
             const filteredTasks = state.filter((task:Task) => task.id !== action.payload)
             localStorage.setItem("tasks", JSON.stringify(filteredTasks))
             return filteredTasks
+        },
+        doneTask: (state: Task[],action:PayloadAction<number>) => {
+            const index = state.findIndex((task:Task) => task.id === action.payload)
+            state[index].status = "done"
+            localStorage.setItem("tasks", JSON.stringify(state))
         }
     }
 })
-export const { addTask, updateTask, deleteTask } = taskSlice.actions;
+export const { addTask, updateTask, deleteTask, doneTask } = taskSlice.actions;

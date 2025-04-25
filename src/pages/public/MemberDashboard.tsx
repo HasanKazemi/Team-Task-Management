@@ -1,7 +1,8 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Project, Task } from '../../types'
 import { AuthState } from '../../redux/slices/AuthSlice'
+import { doneTask } from '../../redux/slices/TaskSlice'
 
 const MemberDashboard: React.FC = () => {
   const {user} = useSelector((state:{auth: AuthState}) => state.auth)
@@ -11,6 +12,8 @@ const MemberDashboard: React.FC = () => {
 
   const allTasks = useSelector((state: { tasks: Task[] }) => state.tasks)
   const myTasks = allTasks.filter(task => task.assignedUserId === Number(userId))
+
+  const dispatch = useDispatch()
 
   return (
     <div>
@@ -30,9 +33,10 @@ const MemberDashboard: React.FC = () => {
             <div key={task.id} style={{ display: "flex", gap: "20px" }}>
               <p>{task.title}</p>
               <p>{task.description}</p>
-              <p>{task.status}</p>
               <p>{task.priority}</p>
               <p>{task.deadline}</p>
+              <p>{task.status}</p>
+              <button onClick={()=>dispatch(doneTask(task.id))}>done</button>
             </div>
           ))
         }
