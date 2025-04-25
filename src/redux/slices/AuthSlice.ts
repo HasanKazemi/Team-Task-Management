@@ -18,8 +18,6 @@ export const authSlice = createSlice({
         login(state,action:PayloadAction<string>){
             const token = action.payload
             const decoded = decodeToken(token)
-            console.log(typeof decoded);
-            
             if (decoded) {
                 state.token = token
                 state.user = decoded
