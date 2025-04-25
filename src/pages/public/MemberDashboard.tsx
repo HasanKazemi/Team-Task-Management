@@ -6,11 +6,11 @@ import { AuthState } from '../../redux/slices/AuthSlice'
 const MemberDashboard: React.FC = () => {
   const {user} = useSelector((state:{auth: AuthState}) => state.auth)
   const userId = user?.split(".")[0]
-  const projects = useSelector((state: { projects: Project[] }) => state.projects)
-  const allTasks = useSelector((state: { tasks: Task[] }) => state.tasks)
 
-  const myTasks = allTasks.filter(task => task.id === Number(userId))
-  console.log(myTasks);
+  const projects = useSelector((state: { projects: Project[] }) => state.projects)
+
+  const allTasks = useSelector((state: { tasks: Task[] }) => state.tasks)
+  const myTasks = allTasks.filter(task => task.assignedUserId === Number(userId))
 
   return (
     <div>
