@@ -4,6 +4,8 @@ import { Project, Task } from '../../types'
 import { AuthState } from '../../redux/slices/AuthSlice'
 import { doneTask } from '../../redux/slices/TaskSlice'
 import styles from  '../../styles/memberDashboard.module.css'
+import useTaskReminder from '../../reminder/useTaskReminder'
+import { ToastContainer } from 'react-toastify'
 
 const MemberDashboard: React.FC = () => {
   const {user} = useSelector((state:{auth: AuthState}) => state.auth)
@@ -16,8 +18,11 @@ const MemberDashboard: React.FC = () => {
 
   const dispatch = useDispatch()
 
+  useTaskReminder(myTasks)
+
   return (
     <div className={styles.container}>
+      <ToastContainer />
       <div className={styles.projectsSection}>
         <h2 className={styles.sectionTitle}>Project List</h2>
         {projects.map(project => (
