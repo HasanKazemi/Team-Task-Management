@@ -15,16 +15,21 @@ const TasksPage:React.FC = () => {
     const tasks:Task[] = useSelector((state:{tasks:Task[]}) => state.tasks)
     const thisTasks = tasks?.filter((task:Task) => task.assignedProjectId === Number(params.projectId))
 
+    const now = new Date()
+    now.setMinutes(now.getMinutes()-now.getTimezoneOffset())
+    const thisTime = now.toISOString().slice(0,16);
+
     const defaultFormData : Task = {
         id: 0,
         title: "",
         description: "",
         priority: "low" as "low" | "medium" | "high",
         status: "in-progress" as "in-progress" | "done",
-        deadline: "",
+        deadline: thisTime,
         assignedUserId: 1,
         assignedProjectId: Number(params.projectId),
     }
+
     const [formData, setFormData] = useState(defaultFormData)
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
@@ -80,7 +85,7 @@ const TasksPage:React.FC = () => {
                     <option value="in-progress">in-progress</option>
                     <option value="done">done</option>
                 </select>
-                <input className={styles.input} type="date" name="deadline" id="deadline" value={formData.deadline} onChange={handleChange}/>
+                <input className={styles.input} type="datetime-local" name="deadline" id="deadline" value={formData.deadline} onChange={handleChange}/>
                 <select className={styles.select} name="assignedUserId" id="assignedUserId" value={formData.assignedUserId} onChange={handleChange}>
                     {users.map(user => (
                         <option key={user.id} value={user.id}>{user.name}</option>
