@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { Project, Task, User } from '../types';
 import { addTask, deleteTask, updateTask } from '../redux/slices/TaskSlice';
+import styles from '../styles/tasks.module.css'; 
 
 const TasksPage:React.FC = () => {
     const [isEditMode, setIsEditMode] = useState(false)
@@ -60,43 +61,64 @@ const TasksPage:React.FC = () => {
     }
 
   return (
-    <div>
-        <h1>{thisProject?.title}</h1>
-        <div style={{display: "flex"}}>
-            <h2>{isEditMode ? "Edit Mode" : "Add Mode"}</h2>
-            {isEditMode && <button onClick={() => {setIsEditMode(false);setFormData(defaultFormData)}}>Back to Add Mode</button>}
+    <div className={styles.container}>
+        <h1 className={styles.header}>{thisProject?.title}</h1>
+        <div className={styles.modeToggle}>
+            <h2 className={styles.modeTitle}>{isEditMode ? "Edit Mode" : "Add Mode"}</h2>
+            {isEditMode && <button className={styles.modeButton} onClick={() => {setIsEditMode(false);setFormData(defaultFormData)}}>Back to Add Mode</button>}
         </div>
-        <form onSubmit={handleSubmit}>
-            <input type="text" name="title" id="title" placeholder='task title....' value={formData.title} onChange={handleChange} />
-            <input type="text" name="description" id="description" placeholder='task description....' value={formData.description} onChange={handleChange}/>
-            <select name="priority" id="priority" value={formData.priority} onChange={handleChange}>
-                <option value="low">low</option>
-                <option value="medium">medium</option>
-                <option value="high">high</option>
-            </select>
-            <select name="status" id="status" value={formData.status} onChange={handleChange}>
-                <option value="in-progress">in-progress</option>
-                <option value="done">done</option>
-            </select>
-            <input type="date" name="deadline" id="deadline" value={formData.deadline} onChange={handleChange}/>
-            <select name="assignedUserId" id="assignedUserId" value={formData.assignedUserId} onChange={handleChange}>
-                {users.map(user => (
-                    <option key={user.id} value={user.id}>{user.name}</option>
-                ))}
-            </select>
-            <button type='submit'>{isEditMode ? "update task" : "add task"}</button>
+        <form className={styles.form} onSubmit={handleSubmit}>
+            <div className={styles.formGroup}>
+                <input className={styles.input} type="text" name="title" id="title" placeholder='task title....' value={formData.title} onChange={handleChange} />
+                <input className={styles.input} type="text" name="description" id="description" placeholder='task description....' value={formData.description} onChange={handleChange}/>
+                <select className={styles.select} name="priority" id="priority" value={formData.priority} onChange={handleChange}>
+                    <option value="low">low</option>
+                    <option value="medium">medium</option>
+                    <option value="high">high</option>
+                </select>
+                <select className={styles.select} name="status" id="status" value={formData.status} onChange={handleChange}>
+                    <option value="in-progress">in-progress</option>
+                    <option value="done">done</option>
+                </select>
+                <input className={styles.input} type="date" name="deadline" id="deadline" value={formData.deadline} onChange={handleChange}/>
+                <select className={styles.select} name="assignedUserId" id="assignedUserId" value={formData.assignedUserId} onChange={handleChange}>
+                    {users.map(user => (
+                        <option key={user.id} value={user.id}>{user.name}</option>
+                    ))}
+                </select>
+            </div>
+            <button className={styles.submitButton} type='submit'>{isEditMode ? "update task" : "add task"}</button>
         </form>
         {isEditMode || (
-            <div style={{marginTop: "50px"}}>
+            <div className={styles.taskList}>
                 {thisTasks?.map(task => (
-                    <div key={task.id} style={{display: "flex",gap:"10px",marginBottom:"20px"}}>
-                        <h2>{task.title}</h2>
-                        <h3>{task.description}</h3>
-                        <p>{task.priority}</p>
-                        <p>{task.status}</p>
-                        <p>{task.deadline}</p>
-                        <button onClick={()=>handleEdit(task.id)}>edit</button>
-                        <button onClick={()=>dispatch(deleteTask(task.id))}>delete</button>
+                    <div key={task.id} className={styles.taskCard}>
+                        <div className={styles.taskHeader}>
+                            <h2 className={styles.taskTitle}>{task.title}</h2>
+                        </div>
+                        <p className={styles.taskDescription}>{task.description}</p>
+                        <div className={styles.taskDetails}>
+                            <div className={styles.taskDetail}>
+                                <span className={styles.detailLabel}>Priority</span>
+                                <span className={`${styles.priority} ${styles[`priority${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}`]}`}>
+                                    {task.priority}
+                                </span>
+                            </div>
+                            <div className={styles.taskDetail}>
+                                <span className={styles.detailLabel}>Status</span>
+                                <span className={`${styles.status} ${styles[`status${task.status === 'in-progress' ? 'InProgress' : 'Done'}`]}`}>
+                                    {task.status}
+                                </span>
+                            </div>
+                            <div className={styles.taskDetail}>
+                                <span className={styles.detailLabel}>Deadline</span>
+                                <span className={styles.detailValue}>{task.deadline}</span>
+                            </div>
+                        </div>
+                        <div className={styles.taskActions}>
+                            <button className={`${styles.actionButton} ${styles.editButton}`} onClick={()=>handleEdit(task.id)}>edit</button>
+                            <button className={`${styles.actionButton} ${styles.deleteButton}`} onClick={()=>dispatch(deleteTask(task.id))}>delete</button>
+                        </div>
                     </div>
                 ))}
             </div>

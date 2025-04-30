@@ -1,0 +1,300 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .header {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    text-align: center;
+    position: relative;
+  }
+  
+  .header::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    margin: 10px auto;
+    border-radius: 2px;
+  }
+  
+  .modeToggle {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  .modeTitle {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    font-weight: 600;
+  }
+  
+  .modeButton {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .modeButton:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+  }
+  
+  .form {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .formGroup {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e0e6ed;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8fafc;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #3498db;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  }
+  
+  .select {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e0e6ed;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8fafc;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+  }
+  
+  .submitButton {
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 1rem;
+  }
+  
+  .submitButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+  }
+  
+  .taskList {
+    margin-top: 3rem;
+  }
+  
+  .taskCard {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #3498db;
+    transition: all 0.3s ease;
+  }
+  
+  .taskCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .taskHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .taskTitle {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    font-weight: 600;
+  }
+  
+  .taskDescription {
+    color: #7f8c8d;
+    margin-bottom: 1rem;
+  }
+  
+  .taskDetails {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .taskDetail {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .detailLabel {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+  }
+  
+  .detailValue {
+    font-size: 0.9rem;
+    color: #2c3e50;
+    font-weight: 500;
+  }
+  
+  .priority {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .priorityLow {
+    background: #d4edda;
+    color: #28a745;
+  }
+  
+  .priorityMedium {
+    background: #fff3cd;
+    color: #f39c12;
+  }
+  
+  .priorityHigh {
+    background: #ffdddd;
+    color: #e74c3c;
+  }
+  
+  .status {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .statusInProgress {
+    background: #d1ecf1;
+    color: #0c5460;
+  }
+  
+  .statusDone {
+    background: #d4edda;
+    color: #155724;
+  }
+  
+  .taskActions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .actionButton {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .editButton {
+    background: #3498db;
+    color: white;
+  }
+  
+  .editButton:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+  }
+  
+  .deleteButton {
+    background: #e74c3c;
+    color: white;
+  }
+  
+  .deleteButton:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .container {
+      padding: 1.5rem;
+    }
+    
+    .formGroup {
+      grid-template-columns: 1fr;
+    }
+    
+    .taskDetails {
+      grid-template-columns: 1fr;
+    }
+    
+    .submitButton {
+      max-width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      padding: 1rem;
+    }
+    
+    .header {
+      font-size: 1.5rem;
+    }
+    
+    .taskActions {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .actionButton {
+      width: 100%;
+    }
+  }

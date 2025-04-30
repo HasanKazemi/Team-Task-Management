@@ -1,0 +1,217 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .header {
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    text-align: center;
+    position: relative;
+  }
+  
+  .header::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    margin: 10px auto;
+    border-radius: 2px;
+  }
+  
+  .projectsSection, .tasksSection {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    margin-bottom: 30px;
+  }
+  
+  .sectionTitle {
+    color: #34495e;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sectionTitle::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 25px;
+    background: #3498db;
+    margin-right: 10px;
+    border-radius: 4px;
+  }
+  
+  .projectCard {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid #3498db;
+    background: #f8f9fa;
+    border-radius: 0 8px 8px 0;
+    transition: all 0.3s ease;
+  }
+  
+  .projectCard:hover {
+    transform: translateX(5px);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .projectTitle {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+  }
+  
+  .projectDescription {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+  }
+  
+  .taskList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .taskCard {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    border-top: 4px solid #e74c3c;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .taskCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .taskTitle {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+  
+  .taskDetail {
+    display: flex;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+  }
+  
+  .taskLabel {
+    font-weight: 600;
+    color: #7f8c8d;
+    min-width: 80px;
+  }
+  
+  .taskValue {
+    color: #34495e;
+  }
+  
+  .taskPriority {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  
+  .priorityHigh {
+    background-color: #ffdddd;
+    color: #e74c3c;
+  }
+  
+  .priorityMedium {
+    background-color: #fff3cd;
+    color: #f39c12;
+  }
+  
+  .priorityLow {
+    background-color: #d4edda;
+    color: #28a745;
+  }
+  
+  .taskStatus {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background-color: #d1ecf1;
+    color: #0c5460;
+  }
+  
+  .doneButton {
+    background: linear-gradient(to right, #2ecc71, #27ae60);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+  
+  .doneButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .container {
+      padding: 15px;
+    }
+    
+    .header {
+      font-size: 1.5rem;
+    }
+    
+    .projectsSection, .tasksSection {
+      padding: 15px;
+    }
+    
+    .taskList {
+      grid-template-columns: 1fr;
+    }
+    
+    .sectionTitle {
+      font-size: 1.2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      padding: 10px;
+    }
+    
+    .header {
+      font-size: 1.3rem;
+    }
+    
+    .projectCard, .taskCard {
+      padding: 12px;
+    }
+    
+    .taskDetail {
+      flex-direction: column;
+    }
+    
+    .taskLabel {
+      margin-bottom: 3px;
+    }
+  }

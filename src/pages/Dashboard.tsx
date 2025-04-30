@@ -3,9 +3,9 @@ import { useSelector } from "react-redux"
 import { Filters, Project, Task, User } from "../types"
 import { Link } from "react-router-dom"
 import { selectFilteredTasks } from "../redux/selectors/selectFilteredTasks"
+import styles from "../styles/dashboard.module.css"
 
 const Dashboard: React.FC = () => {
-
   const users = useSelector((state: { users: User[] }) => state.users)
   const projects = useSelector((state: { projects: Project[] }) => state.projects)
 
@@ -27,61 +27,151 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div>
-        <h1>Users List</h1>
-        {users.map(user=>(
-          <div key={user.id} style={{display:"flex",gap:"20px"}}>
-            <h3>{user.name}</h3>
-            <h4>{user.role}</h4>
+    <div className={styles.container}>
+      <h1 className={styles.header}>Dashboard</h1>
+      
+      <div className={styles.section}>
+        <h2 className={styles.sectionTitle}>Users List</h2>
+        <div className={styles.userList}>
+          {users.map(user => (
+            <div key={user.id} className={styles.userCard}>
+              <h3 className={styles.userName}>{user.name}</h3>
+              <span className={styles.userRole}>{user.role}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <div className={styles.section}>
+        <h2 className={styles.sectionTitle}>Project List</h2>
+        <div className={styles.projectList}>
+          {projects.map(project => (
+            <div key={project.id} className={styles.projectCard}>
+              <p className={styles.projectTitle}>{project.title}</p>
+              <p className={styles.projectDescription}>{project.description}</p>
+              <Link to={`/project/${project.id}`} className={styles.manageLink}>
+                Manage Tasks
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <div className={styles.section}>
+        <div className={styles.filterSection}>
+          <h4 className={styles.filterTitle}>Advanced Filter</h4>
+          <div className={styles.filterGroup}>
+            <div>
+              <label htmlFor="searchTerm" className={styles.filterLabel}>Search by title</label>
+              <input 
+                type="text" 
+                name="searchTerm" 
+                id="searchTerm" 
+                className={styles.filterInput}
+                placeholder="Task title..." 
+                value={filters.searchTerm} 
+                onChange={handleChange} 
+              />
+            </div>
+            
+            <div>
+              <label htmlFor="searchStatus" className={styles.filterLabel}>Filter by status</label>
+              <select 
+                name="searchStatus" 
+                id="searchStatus" 
+                className={styles.filterSelect}
+                value={filters.searchStatus} 
+                onChange={handleChange}
+              >
+                <option value="all">All</option>
+                <option value="in-progress">In-progress</option>
+                <option value="done">Done</option>
+              </select>
+            </div>
+            
+            <div>
+              <label htmlFor="searchPriority" className={styles.filterLabel}>Filter by priority</label>
+              <select 
+                name="searchPriority" 
+                id="searchPriority" 
+                className={styles.filterSelect}
+                value={filters.searchPriority} 
+                onChange={handleChange}
+              >
+                <option value="all">All</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            
+            <div>
+              <label htmlFor="searchAssignedUserId" className={styles.filterLabel}>Responsible person</label>
+              <select 
+                name="searchAssignedUserId" 
+                id="searchAssignedUserId" 
+                className={styles.filterSelect}
+                value={filters.searchAssignedUserId} 
+                onChange={handleChange}
+              >
+                <option value="0">All</option>
+                {users.map(user => (
+                  <option key={user.id} value={user.id}>{user.name}</option>
+                ))}
+              </select>
+            </div>
           </div>
-        ))}
-        <div style={{marginTop: "50px"}}>
-          <h2>Project List</h2>
-          {projects.map(project =>(
-            <div key={project.id} style={{display:"flex",gap:"20px"}}>
-              <p>{project.title}</p>
-              <p>{project.description}</p>
-              <Link to={`/project/${project.id}`}>manage tasks</Link>
-            </div>
-          ))}
         </div>
-        <div style={{marginTop:"100px"}}>
-          <h4>Advance Filter</h4>
-          <label htmlFor="searchTerm">search by title</label>
-          <input type="text" name="searchTerm" id="searchTerm" placeholder="task title..." value={filters.searchTerm} onChange={handleChange} />
-          <label htmlFor="searchStatus">filter by task's status</label>
-          <select name="searchStatus" id="searchStatus" value={filters.searchStatus} onChange={handleChange}>
-            <option value="all">all</option>
-            <option value="in-progress">in-progress</option>
-            <option value="done">done</option>
-          </select>
-          <label htmlFor="searchPriority">filter by task's priority</label>
-          <select name="searchPriority" id="searchPriority" value={filters.searchPriority} onChange={handleChange}>
-            <option value="all">--</option>
-            <option value="low">low</option>
-            <option value="medium">medium</option>
-            <option value="high">high</option>
-          </select>
-          <label htmlFor="searchAssignedUserId">responsible person</label>
-          <select name="searchAssignedUserId" id="searchAssignedUserId" value={filters.searchAssignedUserId} onChange={handleChange}>
-            <option value="">--</option>
-            {users.map(user => (
-              <option key={user.id} value={user.id}>{user.name}</option>
-            ))}
-          </select>
-          <h2>Tasks List</h2>
+        
+        <h2 className={styles.sectionTitle}>Tasks List</h2>
+        <div className={styles.taskList}>
           {filteredTasks?.map(task => (
-            <div key={task.id} style={{display:"flex", gap:"20px"}}>
-              <p>{task.title}</p>
-              <p>{task.description}</p>
-              <p>{task.status}</p>
-              <p>{task.priority}</p>
-              <p>{task.deadline}</p>
-              <p>{projects.find(project=>project.id===task.assignedProjectId)?.title}</p>
-              <p>{users.find(user=>user.id ===task.assignedUserId)?.name}</p>
+            <div key={task.id} className={styles.taskCard}>
+              <h3 className={styles.taskTitle}>{task.title}</h3>
+              
+              <div className={styles.taskDetail}>
+                <span className={styles.taskLabel}>Description:</span>
+                <span className={styles.taskValue}>{task.description}</span>
+              </div>
+              
+              <div className={styles.taskDetail}>
+                <span className={styles.taskLabel}>Status:</span>
+                <span className={styles.taskStatus}>{task.status}</span>
+              </div>
+              
+              <div className={styles.taskDetail}>
+                <span className={styles.taskLabel}>Priority:</span>
+                <span className={`${styles.taskPriority} ${
+                  task.priority === 'high' ? styles.priorityHigh :
+                  task.priority === 'medium' ? styles.priorityMedium :
+                  styles.priorityLow
+                }`}>
+                  {task.priority}
+                </span>
+              </div>
+              
+              <div className={styles.taskDetail}>
+                <span className={styles.taskLabel}>Deadline:</span>
+                <span className={styles.taskValue}>{task.deadline}</span>
+              </div>
+              
+              <div className={styles.taskDetail}>
+                <span className={styles.taskLabel}>Project:</span>
+                <span className={styles.taskValue}>
+                  {projects.find(project => project.id === task.assignedProjectId)?.title}
+                </span>
+              </div>
+              
+              <div className={styles.taskDetail}>
+                <span className={styles.taskLabel}>Assigned to:</span>
+                <span className={styles.taskValue}>
+                  {users.find(user => user.id === task.assignedUserId)?.name}
+                </span>
+              </div>
             </div>
           ))}
         </div>
+      </div>
     </div>
   )
 }

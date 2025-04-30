@@ -5,6 +5,7 @@ import { User } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../redux/slices/AuthSlice';
 import { generateToken } from '../jwt/mockToken';
+import styles from "../styles/authPage.module.css"
 
 const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true)
@@ -69,36 +70,58 @@ const AuthPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleRegister}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit" disabled={loading}>{isLogin? "log in" : "sign up"}</button>
-      </form>
-      {isLogin ? (
-            <div style={{display:"flex"}}>
-                <p>Not a member yet?</p>
-                <button onClick={() => setIsLogin(false)}>click to sign up</button>
-            </div>
-        ):(
-            <div style={{display:"flex"}}>
-                <p>Allready have an account?</p>
-                <button onClick={() => setIsLogin(true)}>click to log in</button>
-            </div>
-        )
-      }
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className={styles.container}>
+      <div className={styles.formContainer}>
+        <h1 className={styles.title}>{isLogin ? "Login" : "Sign Up"}</h1>
+        
+        <form className={styles.form} onSubmit={handleRegister}>
+          <div className={styles.inputGroup}>
+            <input
+              className={styles.input}
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          
+          <div className={styles.inputGroup}>
+            <input
+              className={styles.input}
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          
+          <button 
+            type="submit" 
+            className={styles.submitButton}
+            disabled={loading}
+          >
+            {loading ? "Processing..." : (isLogin ? "Log In" : "Sign Up")}
+          </button>
+        </form>
+
+        <div className={styles.toggleContainer}>
+          <p className={styles.toggleText}>
+            {isLogin ? "Not a member yet?" : "Already have an account?"}
+          </p>
+          <button 
+            className={styles.toggleButton}
+            onClick={() => {
+              setIsLogin(!isLogin);
+              setError('');
+            }}
+          >
+            {isLogin ? "Sign Up" : "Log In"}
+          </button>
+        </div>
+
+        {loading && <p className={styles.loading}>Loading...</p>}
+        {error && <p className={styles.error}>{error}</p>}
+      </div>
     </div>
   );
 };
