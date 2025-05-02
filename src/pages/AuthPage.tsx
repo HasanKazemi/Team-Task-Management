@@ -35,6 +35,11 @@ const AuthPage: React.FC = () => {
   };
 
   const handleSignup = () => {
+    const existUser = users.some(user => user.name === username)
+    if (existUser) {
+      setError("this username alrady exists")
+      return
+    }
     const newUser : User = {
         id: users.length + 1,
         name: username,
@@ -56,7 +61,7 @@ const AuthPage: React.FC = () => {
     navigate("/")
   }
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
     setLoading(true);
@@ -74,7 +79,7 @@ const AuthPage: React.FC = () => {
       <div className={styles.formContainer}>
         <h1 className={styles.title}>{isLogin ? "Login" : "Sign Up"}</h1>
         
-        <form className={styles.form} onSubmit={handleRegister}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
             <input
               className={styles.input}
