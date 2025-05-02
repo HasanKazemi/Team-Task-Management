@@ -31,7 +31,7 @@ A web application for managing team tasks, projects, users, and reminders built 
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/HasanKazemi/Team-Task-Management
    cd Team-Task-Management
    ```
 
@@ -55,33 +55,6 @@ yarn dev
 
 Open your browser and navigate to `http://localhost:5173` to see the app in action.
 
-### Building for Production
-
-To build the app for production:
-
-```bash
-npm run build
-# or
-yarn build
-```
-
-The production-ready files will be in the `dist` folder.
-
-## Project Structure
-
-- `src/` - Source code including components, pages, redux slices, styles, and utilities
-- `public/` - Static assets
-- `README.md` - Project documentation
-- `vite.config.ts` - Vite configuration
-- `package.json` - Project dependencies and scripts
-
-## Contributing
-
-Contributions are welcome! Please open issues or submit pull requests for improvements and bug fixes.
-
-## License
-
-This project is licensed under the MIT License.
 
 ## Images
 
