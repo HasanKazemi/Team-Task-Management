@@ -82,3 +82,23 @@ Contributions are welcome! Please open issues or submit pull requests for improv
 ## License
 
 This project is licensed under the MIT License.
+
+## Images
+
+Admin Dashboard - display all users
+![image Screenshot](./overview/adminDashboard.png)
+
+Add new Projects
+![image Screenshot](./overview/addProject.png)
+
+Add new tasks for each project
+![image screenshot](./overview/addTask.png)
+
+Manage tasks - edit and delete
+![image screenshot](./overview/manageTasks.png)
+
+Advance Filter tasks
+![image screenshot](./overview/filterTasks.png)
+
+Signup/login
+![image screenshot](./overview/authPage.png)
