@@ -9,8 +9,8 @@ import styles from "../styles/authPage.module.css"
 
 const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true)
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('HasanKazemi');
+  const [password, setPassword] = useState('1234');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
